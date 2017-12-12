@@ -1,0 +1,18 @@
+---
+
+- step:
+    name: train1
+    image: valohai/darknet:b61bcf5-cuda8.0-cudnn5-devel-ubuntu16.04
+    command: 
+      - set -x
+      - tar xvf $VH_INPUTS_DIR/images/tree_1712122a.tar
+      - mkdir  $VH_OUTPUTS_DIR/backup 
+      - ln -s $VH_OUTPUTS_DIR/backup backup
+      - /darknet/darknet detector train data/obj.data cfg/brains-3.cfg -gpus 0,1 | tee backup/log.txt | grep -B 2 --line-buffered images
+    inputs:
+      - name: images
+        default: http://k.moonq.org/tree/tree_171212a.tar
+      - name: weights
+        default: http://k.moonq.org/pub/darknet19_448.conv.23
+
+
