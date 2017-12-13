@@ -1,8 +1,13 @@
 #!/bin/bash
 
 cd $VH_OUTPUTS_DIR
-seq 5 | while read f; do
-   sleep 10
-   date > foo$f
+touch .uploaded
+while :; do
+  test -f .done && exit
+  sleep 10
+  for f in *; do
+    grep -q "$f" .uploaded && continue
+    curl -s -F file=@"$f" http://k.moonq.org:8080/ && echo $f >> .uploaded
+  done
 done
 

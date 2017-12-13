@@ -21,7 +21,8 @@
     image: valohai/darknet:b61bcf5-cuda8.0-cudnn5-devel-ubuntu16.04
     command: 
       - set -x
+      - env
       - bash ./background_process.sh &
-      - sleep 60
+      - bash ./output_generator.sh
 
 
